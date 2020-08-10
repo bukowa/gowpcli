@@ -12,10 +12,10 @@ core install:
 plugin install:
  activate: true
  force: true
-
-testenv:
-
- steps:
-  plugin install:
-   - bbpress:
-   - woocommerce:
+#
+#testenv:
+#
+# steps:
+#  plugin install:
+#   - bbpress:
+#   - woocommerce:
