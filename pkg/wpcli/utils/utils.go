@@ -9,6 +9,9 @@ import (
 )
 
 func MakeArg(args []string, key, value string) []string {
+	if value == "" {
+		return append(args, fmt.Sprintf("--%s", key))
+	}
 	return append(args, fmt.Sprintf("--%s=%s", key, value))
 }
 

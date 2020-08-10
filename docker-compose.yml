@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+
+  gpwpcli:
+    user: "33:33:33"
+    build:
+      context: .
+    volumes:
+    - wordpress:/var/www/html
+    - ./:/app
+    entrypoint: ""
+    command: /bin/bash
+#      /app/main
+#        --wait-url http://wordpress:80
+#        --wait-timeout 60s
+#        --wait-status 200
+#      && wp core install
+    depends_on:
+      - wordpress
+    working_dir: "/var/www/html"
+
+  wordpress:
+    image: "wordpress:php7.4"
+    ports:
+      - 8090:80
+    environment:
+      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_USER: test
+      WORDPRESS_DB_PASSWORD: test
+      WORDPRESS_DB_NAME: test
+    volumes:
+      - wordpress:/var/www/html
+
+  mysql:
+    image: "mysql:5.7.31"
+    depends_on:
+      - wordpress
+    environment:
+      MYSQL_ROOT_PASSWORD: test
+      MYSQL_DATABASE: test
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+
+volumes:
+  wordpress:
