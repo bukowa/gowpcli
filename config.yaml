@@ -1,8 +1,0 @@
-
-core.install:
-  url: "http://localhost:8090"
-  title: "test"
-  adminuser: "test"
-  adminpassword: "test"
-  adminemail: "test@example.com"
-  skipemail: true
