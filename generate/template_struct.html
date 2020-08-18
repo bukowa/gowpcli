@@ -2,7 +2,7 @@
 {{ cmd.longdesc.replace("\n\n", "\n").replace("\n", "\n\t").replace("\t##", "##") }}
  */
 package {{ go.package }}
-{% if go.fields %}import utils "github.com/bukowa/gowpcli/gowpcli"{%- endif %}
+{% if go.fields %}import utils "github.com/bukowa/gowpcli"{%- endif %}
 
 // {{ go.struct_name }} {{ cmd.description }}
 type {{ go.struct_name }} struct {
@@ -11,7 +11,7 @@ type {{ go.struct_name }} struct {
     {%- endfor %}
 }
 
-func ({{ go.pointer }} *{{ go.struct_name }}) Args() []string {
+func ({{ go.pointer }} {{ go.struct_name }}) Args() []string {
     var args = []string{{ '{' }}{{ go.command_tree }}{{ '}' }}
 {%- for f in go.fields %}
     args = utils.MakeArg(args, "{{ f.param }}", {{ go.pointer }}.{{ f.name }})
