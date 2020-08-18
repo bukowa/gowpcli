@@ -3,6 +3,12 @@ import string
 from typing import Union
 
 
+def make_tabs(s: str) -> str:
+    """
+    if there is no space after \n add a tab
+    """
+    s.rsplit()
+
 def rename_reserved(s: str) -> str:
     """
     some names are reserved in go, handle them here
@@ -27,7 +33,7 @@ def last_index(s: str, char: str) -> int:
     """
     return last index of :param char in s
     """
-    return len(s) - 1 - s[::-1].index(char)
+    return s.rindex(char)
 
 
 def format_golang_comment(s: str) -> str:
