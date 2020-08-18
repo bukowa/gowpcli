@@ -1,26 +1,27 @@
+/*
+## OPTIONS
+	<menu>
+	: The name, slug, or term ID for the menu.
+	<location>
+	: Location's slug.
+## EXAMPLES
+	    $ wp menu location assign primary-menu primary
+	    Success: Assigned location primary to menu primary-menu.
+	
+ */
 package assign
+import utils "github.com/bukowa/gowpcli"
 
-//Assigns a location to a menu.
-
+// Assign //Assigns a location to a menu.
 type Assign struct {
-    
     Menu string // <menu>
-    
     Location string // <location>
-    
 }
 
-//## OPTIONS
-//
-//<menu>
-//: The name, slug, or term ID for the menu.
-//
-//<location>
-//: Location's slug.
-//
-//## EXAMPLES
-//
-//    $ wp menu location assign primary-menu primary
-//    Success: Assigned location primary to menu primary-menu.
-//
-//
+func (a Assign) Args() []string {
+    var args = []string{"menu", "location", "assign"}
+    args = utils.MakeArg(args, "<menu>", a.Menu)
+    args = utils.MakeArg(args, "<location>", a.Location)
+    return args
+}
+

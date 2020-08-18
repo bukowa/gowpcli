@@ -1,15 +1,19 @@
+/*
+## EXAMPLES
+	    $ wp maintenance-mode deactivate
+	    Disabling Maintenance mode...
+	    Success: Deactivated Maintenance mode.
+	
+ */
 package deactivate
 
-//Deactivates maintenance mode.
 
+// Deactivate //Deactivates maintenance mode.
 type Deactivate struct {
-    
 }
 
-//## EXAMPLES
-//
-//    $ wp maintenance-mode deactivate
-//    Disabling Maintenance mode...
-//    Success: Deactivated Maintenance mode.
-//
-//
+func (d Deactivate) Args() []string {
+    var args = []string{"maintenance-mode", "deactivate"}
+    return args
+}
+

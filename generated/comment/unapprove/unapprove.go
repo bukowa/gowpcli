@@ -1,22 +1,24 @@
+/*
+## OPTIONS
+	<id>...
+	: The IDs of the comments to unapprove.
+## EXAMPLES
+	    # Unapprove comment.
+	    $ wp comment unapprove 1337
+	    Success: Unapproved comment 1337.
+	
+ */
 package unapprove
+import utils "github.com/bukowa/gowpcli"
 
-//Unapproves a comment.
-
+// Unapprove //Unapproves a comment.
 type Unapprove struct {
-    
     Id []string // <id>...
-    
 }
 
-//## OPTIONS
-//
-//<id>...
-//: The IDs of the comments to unapprove.
-//
-//## EXAMPLES
-//
-//    # Unapprove comment.
-//    $ wp comment unapprove 1337
-//    Success: Unapproved comment 1337.
-//
-//
+func (u Unapprove) Args() []string {
+    var args = []string{"comment", "unapprove"}
+    args = utils.MakeArg(args, "<id>...", u.Id)
+    return args
+}
+

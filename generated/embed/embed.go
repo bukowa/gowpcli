@@ -1,11 +1,17 @@
+/*
+## INFO
+	
+	
+ */
 package embed
 
-//Inspects oEmbed providers, clears embed cache, and more.
 
+// Embed //Inspects oEmbed providers, clears embed cache, and more.
 type Embed struct {
-    
 }
 
-//
-//
-//
+func (e Embed) Args() []string {
+    var args = []string{"embed"}
+    return args
+}
+

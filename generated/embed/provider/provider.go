@@ -1,11 +1,17 @@
+/*
+## INFO
+	
+	
+ */
 package provider
 
-//Retrieves oEmbed providers.
 
+// Provider //Retrieves oEmbed providers.
 type Provider struct {
-    
 }
 
-//
-//
-//
+func (p Provider) Args() []string {
+    var args = []string{"embed", "provider"}
+    return args
+}
+

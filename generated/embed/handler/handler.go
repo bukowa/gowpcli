@@ -1,11 +1,17 @@
+/*
+## INFO
+	
+	
+ */
 package handler
 
-//Retrieves embed handlers.
 
+// Handler //Retrieves embed handlers.
 type Handler struct {
-    
 }
 
-//
-//
-//
+func (h Handler) Args() []string {
+    var args = []string{"embed", "handler"}
+    return args
+}
+

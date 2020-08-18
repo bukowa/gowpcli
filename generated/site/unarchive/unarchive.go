@@ -1,21 +1,23 @@
+/*
+## OPTIONS
+	<id>...
+	: One or more IDs of sites to unarchive.
+## EXAMPLES
+	    $ wp site unarchive 123
+	    Success: Site 123 unarchived.
+	
+ */
 package unarchive
+import utils "github.com/bukowa/gowpcli"
 
-//Unarchives one or more sites.
-
+// Unarchive //Unarchives one or more sites.
 type Unarchive struct {
-    
     Id []string // <id>...
-    
 }
 
-//## OPTIONS
-//
-//<id>...
-//: One or more IDs of sites to unarchive.
-//
-//## EXAMPLES
-//
-//    $ wp site unarchive 123
-//    Success: Site 123 unarchived.
-//
-//
+func (u Unarchive) Args() []string {
+    var args = []string{"site", "unarchive"}
+    args = utils.MakeArg(args, "<id>...", u.Id)
+    return args
+}
+

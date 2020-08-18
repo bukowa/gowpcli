@@ -1,14 +1,18 @@
+/*
+## EXAMPLES
+	    $ wp cli cache clear
+	    Success: Cache cleared.
+	
+ */
 package clear
 
-//Clears the internal cache.
 
+// Clear //Clears the internal cache.
 type Clear struct {
-    
 }
 
-//## EXAMPLES
-//
-//    $ wp cli cache clear
-//    Success: Cache cleared.
-//
-//
+func (c Clear) Args() []string {
+    var args = []string{"cli", "cache", "clear"}
+    return args
+}
+

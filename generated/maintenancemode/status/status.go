@@ -1,14 +1,18 @@
+/*
+## EXAMPLES
+	    $ wp maintenance-mode status
+	    Maintenance mode is active.
+	
+ */
 package status
 
-//Displays maintenance mode status.
 
+// Status //Displays maintenance mode status.
 type Status struct {
-    
 }
 
-//## EXAMPLES
-//
-//    $ wp maintenance-mode status
-//    Maintenance mode is active.
-//
-//
+func (s Status) Args() []string {
+    var args = []string{"maintenance-mode", "status"}
+    return args
+}
+

@@ -1,17 +1,20 @@
+/*
+## OPTIONS
+## EXAMPLES
+	    # Get new salts for your wp-config.php file
+	    $ wp config shuffle-salts
+	    Success: Shuffled the salt keys.
+	
+ */
 package shufflesalts
 
-//Refreshes the salts defined in the wp-config.php file.
 
+// ShuffleSalts //Refreshes the salts defined in the wp-config.php file.
 type ShuffleSalts struct {
-    
 }
 
-//## OPTIONS
-//
-//## EXAMPLES
-//
-//    # Get new salts for your wp-config.php file
-//    $ wp config shuffle-salts
-//    Success: Shuffled the salt keys.
-//
-//
+func (s ShuffleSalts) Args() []string {
+    var args = []string{"config", "shuffle-salts"}
+    return args
+}
+

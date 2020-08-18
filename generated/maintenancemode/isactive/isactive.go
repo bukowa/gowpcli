@@ -1,15 +1,19 @@
+/*
+## EXAMPLES
+	    $ wp maintenance-mode is-active
+	    $ echo $?
+	    1
+	
+ */
 package isactive
 
-//Detects maintenance mode status.
 
+// IsActive //Detects maintenance mode status.
 type IsActive struct {
-    
 }
 
-//## EXAMPLES
-//
-//    $ wp maintenance-mode is-active
-//    $ echo $?
-//    1
-//
-//
+func (i IsActive) Args() []string {
+    var args = []string{"maintenance-mode", "is-active"}
+    return args
+}
+

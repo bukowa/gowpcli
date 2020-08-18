@@ -1,21 +1,23 @@
+/*
+## OPTIONS
+	<id>...
+	: One or more IDs of sites to deactivate.
+## EXAMPLES
+	    $ wp site deactivate 123
+	    Success: Site 123 deactivated.
+	
+ */
 package deactivate
+import utils "github.com/bukowa/gowpcli"
 
-//Deactivates one or more sites.
-
+// Deactivate //Deactivates one or more sites.
 type Deactivate struct {
-    
     Id []string // <id>...
-    
 }
 
-//## OPTIONS
-//
-//<id>...
-//: One or more IDs of sites to deactivate.
-//
-//## EXAMPLES
-//
-//    $ wp site deactivate 123
-//    Success: Site 123 deactivated.
-//
-//
+func (d Deactivate) Args() []string {
+    var args = []string{"site", "deactivate"}
+    args = utils.MakeArg(args, "<id>...", d.Id)
+    return args
+}
+
