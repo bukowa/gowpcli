@@ -52,8 +52,8 @@ class GoCommand:
         # format data to golang
         self.struct_name = format_to_go_struct(self.command.name)
         self.struct_name = rename_reserved(self.struct_name)
-        self.package = self.struct_name.replace("-", "_")
-        self.folder = self.package.lower()
+        self.package = self.struct_name.replace("-", "_").lower()
+        self.folder = self.package
         self.command.longdesc = trim_by_index(self.command.longdesc, "## GLOBAL PARAMETERS")
         self.command.longdesc = format_golang_comment(self.command.longdesc)
         self.command.description = format_golang_comment(self.command.description)
