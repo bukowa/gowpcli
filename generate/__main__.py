@@ -86,9 +86,10 @@ class Command:
         if not self.parent:
             path = f"generated/{self.folder}"
         elif self.parent and self.parent.parent:
-            path = f"generated/{self.parent.folder}/{self.parent.parent.folder}/{self.folder}"
+            path = f"generated/{self.parent.parent.folder}/{self.parent.folder}/{self.folder}"
         elif self.parent:
             path = f"generated/{self.parent.folder}/{self.folder}"
+        else: raise Exception(self)
 
         self.gocommand.path = path
         if not os.path.isdir(path):
