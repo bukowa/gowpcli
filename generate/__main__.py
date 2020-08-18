@@ -94,6 +94,9 @@ class Command:
         if not os.path.isdir(path):
             os.makedirs(path)
 
+        if os.path.isfile(f"{path}/{self.folder}.go"):
+            raise Exception(f"{path}/{self.folder}.go")
+
         with open(f"{path}/{self.folder}.go", "w", encoding="utf-8") as f:
             f.write(TEMPLATE_STRUCT.render(
                 go=self.gocommand,
@@ -110,12 +113,12 @@ if __name__ == '__main__':
     except FileNotFoundError: pass
 
     os.makedirs("./generated")
-    x = json.load(open("dump.json", "r", encoding="utf-8"))
+    _x = json.load(open("dump.json", "r", encoding="utf-8"))
 
-    for cmd in x['subcommands']:
-        COMMANDS.append(Command(**cmd))
+    for _cmd in _x['subcommands']:
+        COMMANDS.append(Command(**_cmd))
 
-    with open("./generated/main.go", "w", encoding="utf-8") as f:
-        f.write(TEMPLATE_MAIN.render(
+    with open("./generated/main.go", "w", encoding="utf-8") as _f:
+        _f.write(TEMPLATE_MAIN.render(
             imports=MAIN_IMPORTS,
         ))
