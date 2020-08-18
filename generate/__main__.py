@@ -8,6 +8,7 @@ from jinja2 import Template
 from generate.synopsis import Synopsis
 from generate.utils import trim_by_index, format_to_go_struct, format_golang_comment, random_string, rename_reserved
 
+PARAMS = []
 COMMANDS: List['Command'] = []
 MAIN_IMPORTS: List['GoCommand'] = []
 
@@ -38,6 +39,7 @@ class GoField:
         self.name = format_to_go_struct(self.name)
 
 
+
 @dataclass
 class GoCommand:
     command: 'Command'
@@ -47,15 +49,23 @@ class GoCommand:
     folder: str = field(init=False, default=None)
     path: str = field(init=False, default=None)
     import_: str = field(init=False, default=None)
+    command_tree: str = field(init=False, default='"wp"')
+
+    pointer: str = field(init=False, default=None)
 
     def __post_init__(self):
+        self.pointer = self.command.name[0].lower()
         # format data to golang
         self.struct_name = format_to_go_struct(self.command.name)
         self.struct_name = rename_reserved(self.struct_name)
         self.package = self.struct_name.replace("-", "_").lower()
         self.folder = self.package
         self.command.longdesc = trim_by_index(self.command.longdesc, "## GLOBAL PARAMETERS")
-        self.command.longdesc = format_golang_comment(self.command.longdesc)
+        # self.command.longdesc = format_golang_comment(self.command.longdesc)
+        if not self.command.longdesc.startswith("##"):
+            self.command.longdesc = "## INFO\n" + self.command.longdesc
+        if not self.command.longdesc.startswith("\t"):
+            self.command.longdesc = "\t" + self.command.longdesc
         self.command.description = format_golang_comment(self.command.description)
         self.import_ = random_string(30)
 
@@ -63,6 +73,9 @@ class GoCommand:
         if self.command.synopsis:
             synopsis = Synopsis(text=self.command.synopsis)
             self.fields = [GoField(_x) for _x in synopsis.params]
+            PARAMS.append({synopsis.text: self.fields})
+
+        # build command tree
 
 
 @dataclass
@@ -75,6 +88,7 @@ class Command:
     synopsis: Union[str, None] = None
     parent: Union[None, 'Command'] = None
     gocommand: GoCommand = None
+    command_tree: str = field(init=False, default='"wp"')
 
     @property
     def folder(self):
@@ -84,13 +98,18 @@ class Command:
         self.gocommand = GoCommand(command=self)
 
         if not self.parent:
+            tree = f'"{self.name}"'
             path = f"generated/{self.folder}"
         elif self.parent and self.parent.parent:
+            tree = f'"{self.parent.parent.name}", "{self.parent.name}", "{self.name}"'
             path = f"generated/{self.parent.parent.folder}/{self.parent.folder}/{self.folder}"
         elif self.parent:
+            tree = f'"{self.parent.name}", "{self.name}"'
             path = f"generated/{self.parent.folder}/{self.folder}"
         else: raise Exception(self)
 
+        self.command_tree = tree
+        self.gocommand.command_tree = tree
         self.gocommand.path = path
         if not os.path.isdir(path):
             os.makedirs(path)
