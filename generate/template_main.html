@@ -3,7 +3,7 @@ package main
 import (
     "fmt"
     {% for foo in imports %}
-    {{ foo.import_ }} "github.com/bukowa/gowpcli/generate/{{ foo.path }}"
+    {{ foo.import_ }} "github.com/bukowa/gowpcli/{{ foo.path }}"
     {%- endfor %}
 )
 
