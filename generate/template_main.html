@@ -1,0 +1,14 @@
+package main
+
+import (
+    "fmt"
+    {% for foo in imports %}
+    {{ foo.import_ }} "github.com/bukowa/gowpcli/generate/{{ foo.path }}"
+    {%- endfor %}
+)
+
+func main() {
+{% for foo in imports %}
+fmt.Print(&{{ foo.import_ }}.{{ foo.struct_name }}{})
+{%- endfor %}
+}

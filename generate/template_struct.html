@@ -1,0 +1,11 @@
+package {{ go.package }}
+
+{{ cmd.description }}
+
+type {{ go.struct_name }} struct {
+    {% for f in go.fields %}
+    {{ f.name }} {{ f.type_ }} // {{ f.param }}
+    {% endfor %}
+}
+
+{{ cmd.longdesc }}
