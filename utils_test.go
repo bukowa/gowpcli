@@ -19,64 +19,6 @@ func (b BasicHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(200)
 }
 
-func TestWaitForUrl(t *testing.T) {
-	t.Parallel()
-	var testServer = httptest.NewServer(BasicHandler{})
-	defer testServer.Close()
-
-	type args struct {
-		url      string
-		status   int
-		duration time.Duration
-	}
-	tests := []struct {
-		name      string
-		args      args
-		wantReady bool
-	}{
-		{
-			name: "1", args: args{
-				url:      testServer.URL,
-				status:   200,
-				duration: time.Second * 6,
-			},
-			wantReady: true,
-		},
-		{
-			name: "2",
-			args: args{
-				url:      testServer.URL,
-				status:   300,
-				duration: time.Second * 6,
-			},
-			wantReady: false,
-		},
-		{
-			name: "3", args: args{
-				url:      testServer.URL,
-				status:   200,
-				duration: time.Second * 4,
-			},
-			wantReady: false,
-		},
-		{
-			name: "4", args: args{
-				url:      testServer.URL,
-				status:   300,
-				duration: time.Second * 4,
-			},
-			wantReady: false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if gotReady := WaitForUrl(tt.args.url, tt.args.status, tt.args.duration); gotReady != tt.wantReady {
-				t.Errorf("WaitForUrl() = %v, want %v", gotReady, tt.wantReady)
-			}
-		})
-	}
-}
-
 func Test_formatParam(t *testing.T) {
 	type args struct {
 		k string

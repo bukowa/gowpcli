@@ -12,3 +12,4 @@ jobs:
       - name: go test
         run: |
           go test -v ./...
+          go run ./generated

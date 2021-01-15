@@ -1,14 +1,9 @@
 package gowpcli
 
 import (
-	"context"
 	"fmt"
 	"regexp"
-
-	"log"
-	"net/http"
 	"strings"
-	"time"
 )
 
 // todo special treatment
@@ -92,40 +87,4 @@ func MakeArg(args []string, k string, v interface{}) []string {
 	}
 	Logger.Debugf("RETURN:%v", args)
 	return args
-}
-
-func WaitForUrl(url string, status int, duration time.Duration) (ready bool) {
-
-	mainCtx, cancelMain := context.WithTimeout(context.Background(), duration)
-	defer cancelMain()
-
-	reqCtx, cancelReq := context.WithTimeout(context.Background(), duration)
-	defer cancelReq()
-
-	for {
-		select {
-		case <- mainCtx.Done():
-			log.Printf("main context timeout, context error: %v", mainCtx.Err())
-			return
-		default:
-			client := &http.Client{}
-			req, _ := http.NewRequest(http.MethodGet, url, nil)
-			req = req.WithContext(reqCtx)
-
-			log.Printf("sending http request to %s", url)
-			res, err := client.Do(req)
-			log.Printf("received http response from %s, errors: %v", url, err)
-
-			if err == nil {
-				log.Printf("status code for %s %v", url, res.StatusCode)
-				if res.StatusCode == status {
-					ready = true
-					log.Printf("%s is ready", req.URL)
-					return
-				}
-			}
-			// todo we don't want to spam in our case
-			time.Sleep(time.Second)
-		}
-	}
 }
