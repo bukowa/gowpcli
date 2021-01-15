@@ -7,7 +7,6 @@ import (
 )
 
 func TestInstall_Args(t *testing.T) {
-	t.Errorf("")
 	type fields struct {
 		Url           string
 		Title         string

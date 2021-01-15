@@ -3,7 +3,6 @@ package gowpcli
 import (
 	"errors"
 	"net/http"
-	"net/http/httptest"
 	"reflect"
 	"sort"
 	"strings"
