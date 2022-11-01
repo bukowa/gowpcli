@@ -15,6 +15,8 @@
 	: Extra arguments to pass to mysql. [Refer to mysql binary docs](https://dev.mysql.com/doc/refman/8.0/en/mysql-command-options.html).
 	[--skip-optimization]
 	: When using an SQL file, do not include speed optimization such as disabling auto-commit and key checks.
+	[--defaults]
+	: Loads the environment's MySQL option files. Default behavior is to skip loading them to avoid failures due to misconfiguration.
 ## EXAMPLES
 	    # Import MySQL from a file.
 	    $ wp db import wordpress_dbase.sql
@@ -31,6 +33,7 @@ type Import_ struct {
     Dbpass string // [--dbpass=<value>]
     FieldMap map[string]string // [--<field>=<value>]
     SkipOptimization bool // [--skip-optimization]
+    Defaults bool // [--defaults]
 }
 
 func (i Import_) Args() []string {
@@ -40,6 +43,7 @@ func (i Import_) Args() []string {
     args = utils.MakeArg(args, "[--dbpass=<value>]", i.Dbpass)
     args = utils.MakeArg(args, "[--<field>=<value>]", i.FieldMap)
     args = utils.MakeArg(args, "[--skip-optimization]", i.SkipOptimization)
+    args = utils.MakeArg(args, "[--defaults]", i.Defaults)
     return args
 }
 

@@ -18,6 +18,9 @@
 	    # Get user meta
 	    $ wp user meta get 123 bio
 	    Mary is an WordPress developer.
+	    # Get the primary site of a user (for multisite)
+	    $ wp user meta get 2 primary_blog
+	    3
 	
  */
 package get

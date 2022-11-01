@@ -17,6 +17,16 @@
 	  - count
 	  - yaml
 	---
+	[--status=<status>]
+	: Filter the output by theme status.
+	---
+	options:
+	  - active
+	  - parent
+	  - inactive
+	---
+	[--skip-update-check]
+	: If set, the theme update check will be skipped.
 ## AVAILABLE FIELDS
 	These fields will be displayed by default for each theme:
 	* name
@@ -46,6 +56,8 @@ type List struct {
     Field string // [--field=<field>]
     Fields string // [--fields=<fields>]
     Format string // [--format=<format>]
+    Status string // [--status=<status>]
+    SkipUpdateCheck bool // [--skip-update-check]
 }
 
 func (l List) Args() []string {
@@ -54,6 +66,8 @@ func (l List) Args() []string {
     args = utils.MakeArg(args, "[--field=<field>]", l.Field)
     args = utils.MakeArg(args, "[--fields=<fields>]", l.Fields)
     args = utils.MakeArg(args, "[--format=<format>]", l.Format)
+    args = utils.MakeArg(args, "[--status=<status>]", l.Status)
+    args = utils.MakeArg(args, "[--skip-update-check]", l.SkipUpdateCheck)
     return args
 }
 

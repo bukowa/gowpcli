@@ -15,6 +15,8 @@
 	: Update even when installed WP version is greater than the requested version.
 	[--locale=<locale>]
 	: Select which language you want to download.
+	[--insecure]
+	: Retry download without certificate validation if TLS handshake fails. Note: This makes the request vulnerable to a MITM attack.
 ## EXAMPLES
 	    # Update WordPress
 	    $ wp core update
@@ -53,6 +55,7 @@ type Update struct {
     Version string // [--version=<version>]
     Force bool // [--force]
     Locale string // [--locale=<locale>]
+    Insecure bool // [--insecure]
 }
 
 func (u Update) Args() []string {
@@ -62,6 +65,7 @@ func (u Update) Args() []string {
     args = utils.MakeArg(args, "[--version=<version>]", u.Version)
     args = utils.MakeArg(args, "[--force]", u.Force)
     args = utils.MakeArg(args, "[--locale=<locale>]", u.Locale)
+    args = utils.MakeArg(args, "[--insecure]", u.Insecure)
     return args
 }
 

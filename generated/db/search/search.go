@@ -1,6 +1,6 @@
 /*
 ## INFO
-	Searches through all or a selection of database tables for a given string, Outputs colorized references to the string.
+	Searches through all of the text columns in a selection of database tables for a given string, Outputs colorized references to the string.
 	Defaults to searching through all tables registered to $wpdb. On multisite, this default is limited to the tables for the current site.
 ## OPTIONS
 	<search>
@@ -24,7 +24,7 @@
 	default: 40
 	---
 	[--regex]
-	: Runs the search as a regular expression (without delimiters). The search becomes case-sensitive (i.e. no PCRE flags are added). Delimiters must be escaped if they occur in the expression.
+	: Runs the search as a regular expression (without delimiters). The search becomes case-sensitive (i.e. no PCRE flags are added). Delimiters must be escaped if they occur in the expression. Because the search is run on individual columns, you can use the `^` and `$` tokens to mark the start and end of a match, respectively.
 	[--regex-flags=<regex-flags>]
 	: Pass PCRE modifiers to the regex search (e.g. 'i' for case-insensitivity).
 	[--regex-delimiter=<regex-delimiter>]
@@ -80,12 +80,12 @@
 	    wp_options:option_value
 	    1:http://wordpress-develop.dev
 	    wp_options:option_value
-	    1:http://example.com/foo
+	    1:https://example.com/foo
 	        ...
 	    # Search through a multisite database on the subsite 'foo' for the 'example.com' string
 	    $ wp db search example.com --url=example.com/foo
 	    wp_2_comments:comment_author_url
-	    1:http://example.com/
+	    1:https://example.com/
 	    wp_2_options:option_value
 	        ...
 	    # Search through the database for the 'https?://' regular expression, printing stats.

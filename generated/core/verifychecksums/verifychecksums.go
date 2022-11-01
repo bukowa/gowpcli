@@ -12,6 +12,8 @@
 	: Verify checksums against a specific version of WordPress.
 	[--locale=<locale>]
 	: Verify checksums against a specific locale of WordPress.
+	[--insecure]
+	: Retry downloads without certificate validation if TLS handshake fails. Note: This makes the request vulnerable to a MITM attack.
 ## EXAMPLES
 	    # Verify checksums
 	    $ wp core verify-checksums
@@ -37,12 +39,14 @@ import utils "github.com/bukowa/gowpcli"
 type VerifyChecksums struct {
     Version string // [--version=<version>]
     Locale string // [--locale=<locale>]
+    Insecure bool // [--insecure]
 }
 
 func (v VerifyChecksums) Args() []string {
     var args = []string{"core", "verify-checksums"}
     args = utils.MakeArg(args, "[--version=<version>]", v.Version)
     args = utils.MakeArg(args, "[--locale=<locale>]", v.Locale)
+    args = utils.MakeArg(args, "[--insecure]", v.Insecure)
     return args
 }
 

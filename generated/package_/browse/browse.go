@@ -32,17 +32,17 @@
 	      name: 10up/mu-migration
 	      description: A set of WP-CLI commands to support the migration of single WordPress instances to multisite
 	      authors: Nícholas André
-	      version: dev-master, dev-develop
+	      version: dev-main, dev-develop
 	    aaemnnosttv/wp-cli-dotenv-command:
 	      name: aaemnnosttv/wp-cli-dotenv-command
 	      description: Dotenv commands for WP-CLI
 	      authors: Evan Mattson
-	      version: v0.1, v0.1-beta.1, v0.2, dev-master, dev-dev, dev-develop, dev-tests/behat
+	      version: v0.1, v0.1-beta.1, v0.2, dev-main, dev-dev, dev-develop, dev-tests/behat
 	    aaemnnosttv/wp-cli-http-command:
 	      name: aaemnnosttv/wp-cli-http-command
 	      description: WP-CLI command for using the WordPress HTTP API
 	      authors: Evan Mattson
-	      version: dev-master
+	      version: dev-main
 	
  */
 package browse

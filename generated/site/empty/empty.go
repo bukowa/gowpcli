@@ -22,7 +22,7 @@
 	: Proceed to empty the site without a confirmation prompt.
 ## EXAMPLES
 	    $ wp site empty
-	    Are you sure you want to empty the site at http://www.example.com of all posts, comments, and terms? [y/n] y
+	    Are you sure you want to empty the site at http://www.example.com of all posts, links, comments, and terms? [y/n] y
 	    Success: The site at 'http://www.example.com' was emptied.
 	
  */

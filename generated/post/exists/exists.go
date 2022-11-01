@@ -6,7 +6,7 @@
 	: The ID of the post to check.
 ## EXAMPLES
 	    # The post exists.
-	    $ wp post exists 1
+	    $ wp post exists 1337
 	    Success: Post with ID 1337 exists.
 	    $ echo $?
 	    0

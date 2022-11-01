@@ -9,10 +9,17 @@
 	will be run.
 	[--all]
 	: If set, all plugins will be uninstalled.
+	[--exclude=<name>]
+	: Comma separated list of plugin slugs to be excluded from uninstall.
 ## EXAMPLES
 	    $ wp plugin uninstall hello
 	    Uninstalled and deleted 'hello' plugin.
 	    Success: Uninstalled 1 of 1 plugins.
+	    # Uninstall all plugins excluding specified ones
+	    $ wp plugin uninstall --all --exclude=hello-dolly,jetpack
+	    Uninstalled and deleted 'akismet' plugin.
+	    Uninstalled and deleted 'tinymce-templates' plugin.
+	    Success: Uninstalled 2 of 2 plugins.
 	
  */
 package uninstall
@@ -24,6 +31,7 @@ type Uninstall struct {
     Deactivate bool // [--deactivate]
     SkipDelete bool // [--skip-delete]
     All bool // [--all]
+    Exclude string // [--exclude=<name>]
 }
 
 func (u Uninstall) Args() []string {
@@ -32,6 +40,7 @@ func (u Uninstall) Args() []string {
     args = utils.MakeArg(args, "[--deactivate]", u.Deactivate)
     args = utils.MakeArg(args, "[--skip-delete]", u.SkipDelete)
     args = utils.MakeArg(args, "[--all]", u.All)
+    args = utils.MakeArg(args, "[--exclude=<name>]", u.Exclude)
     return args
 }
 

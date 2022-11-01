@@ -12,6 +12,8 @@
 	: Password to pass to mysqlcheck. Defaults to DB_PASSWORD.
 	[--<field>=<value>]
 	: Extra arguments to pass to mysqlcheck. [Refer to mysqlcheck docs](https://dev.mysql.com/doc/en/mysqlcheck.html).
+	[--defaults]
+	: Loads the environment's MySQL option files. Default behavior is to skip loading them to avoid failures due to misconfiguration.
 ## EXAMPLES
 	    $ wp db check
 	    Success: Database checked.
@@ -25,6 +27,7 @@ type Check struct {
     Dbuser string // [--dbuser=<value>]
     Dbpass string // [--dbpass=<value>]
     FieldMap map[string]string // [--<field>=<value>]
+    Defaults bool // [--defaults]
 }
 
 func (c Check) Args() []string {
@@ -32,6 +35,7 @@ func (c Check) Args() []string {
     args = utils.MakeArg(args, "[--dbuser=<value>]", c.Dbuser)
     args = utils.MakeArg(args, "[--dbpass=<value>]", c.Dbpass)
     args = utils.MakeArg(args, "[--<field>=<value>]", c.FieldMap)
+    args = utils.MakeArg(args, "[--defaults]", c.Defaults)
     return args
 }
 

@@ -12,6 +12,7 @@
 	[--anchor=<anchor>]
 	: Anchor string where additions of new values are anchored around.
 	Defaults to "/* That's all, stop editing!".
+	The special case "EOF" string uses the end of the file as the anchor.
 	[--placement=<placement>]
 	: Where to place the new values in relation to the anchor string.
 	---
@@ -33,6 +34,9 @@
 	  - variable
 	  - all
 	---
+	[--config-file=<path>]
+	: Specify the file path to the config file to be modified. Defaults to the root of the
+	WordPress installation and the filename "wp-config.php".
 ## EXAMPLES
 	    # Set the WP_DEBUG constant to true.
 	    $ wp config set WP_DEBUG true --raw
@@ -51,6 +55,7 @@ type Set struct {
     Placement string // [--placement=<placement>]
     Separator string // [--separator=<separator>]
     Type string // [--type=<type>]
+    ConfigFile string // [--config-file=<path>]
 }
 
 func (s Set) Args() []string {
@@ -63,6 +68,7 @@ func (s Set) Args() []string {
     args = utils.MakeArg(args, "[--placement=<placement>]", s.Placement)
     args = utils.MakeArg(args, "[--separator=<separator>]", s.Separator)
     args = utils.MakeArg(args, "[--type=<type>]", s.Type)
+    args = utils.MakeArg(args, "[--config-file=<path>]", s.ConfigFile)
     return args
 }
 

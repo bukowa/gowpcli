@@ -2,21 +2,19 @@
 ## INFO
 	WP-CLI packages are community-maintained projects built on WP-CLI. They can
 	contain WP-CLI commands, but they can also just extend WP-CLI in some way.
-	Installable packages are listed in the
-	[Package Index](http://wp-cli.org/package-index/).
 	Learn how to create your own command from the
-	[Commands Cookbook](http://wp-cli.org/docs/commands-cookbook/)
+	[Commands Cookbook](https://make.wordpress.org/cli/handbook/commands-cookbook/)
 ## EXAMPLES
 	    # List installed packages
 	    $ wp package list
-	    +-----------------------+------------------------------------------+---------+------------+
-	    | name                  | description                              | authors | version    |
-	    +-----------------------+------------------------------------------+---------+------------+
-	    | wp-cli/server-command | Start a development server for WordPress |         | dev-master |
-	    +-----------------------+------------------------------------------+---------+------------+
+	    +-----------------------+------------------------------------------+---------+----------+
+	    | name                  | description                              | authors | version  |
+	    +-----------------------+------------------------------------------+---------+----------+
+	    | wp-cli/server-command | Start a development server for WordPress |         | dev-main |
+	    +-----------------------+------------------------------------------+---------+----------+
 	    # Install the latest development version of the package
 	    $ wp package install wp-cli/server-command
-	    Installing package wp-cli/server-command (dev-master)
+	    Installing package wp-cli/server-command (dev-main)
 	    Updating /home/person/.wp-cli/packages/composer.json to require the package...
 	    Using Composer to install the package...
 	    ---

@@ -18,28 +18,15 @@
 	: Name, git URL, directory path, or .zip file for the package to install.
 	Names can optionally include a version constraint
 	(e.g. wp-cli/server-command:@stable).
+	[--insecure]
+	: Retry downloads without certificate validation if TLS handshake fails. Note: This makes the request vulnerable to a MITM attack.
 ## EXAMPLES
-	    # Install the latest development version from the package index.
-	    $ wp package install wp-cli/server-command
-	    Installing package wp-cli/server-command (dev-master)
-	    Updating /home/person/.wp-cli/packages/composer.json to require the package...
-	    Using Composer to install the package...
-	    ---
-	    Loading composer repositories with package information
-	    Updating dependencies
-	    Resolving dependencies through SAT
-	    Dependency resolution completed in 0.005 seconds
-	    Analyzed 732 packages to resolve dependencies
-	    Analyzed 1034 rules to resolve dependencies
-	     - Installing package
-	    Writing lock file
-	    Generating autoload files
-	    ---
-	    Success: Package installed.
+	    # Install a package hosted at a git URL.
+	    $ wp package install runcommand/hook
 	    # Install the latest stable version.
 	    $ wp package install wp-cli/server-command:@stable
-	    # Install a package hosted at a git URL.
-	    $ wp package install git@github.com:runcommand/hook.git
+	    # Install a package hosted at a GitLab.com URL.
+	    $ wp package install https://gitlab.com/foo/wp-cli-bar-command.git
 	    # Install a package in a .zip file.
 	    $ wp package install google-sitemap-generator-cli.zip
 	
@@ -50,11 +37,13 @@ import utils "github.com/bukowa/gowpcli"
 // Install //Installs a WP-CLI package.
 type Install struct {
     Namegitpathzip string // <name|git|path|zip>
+    Insecure bool // [--insecure]
 }
 
 func (i Install) Args() []string {
     var args = []string{"package", "install"}
     args = utils.MakeArg(args, "<name|git|path|zip>", i.Namegitpathzip)
+    args = utils.MakeArg(args, "[--insecure]", i.Insecure)
     return args
 }
 

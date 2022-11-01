@@ -21,6 +21,8 @@
 	: Update to the latest built version of the master branch. Potentially unstable.
 	[--yes]
 	: Do not prompt for confirmation.
+	[--insecure]
+	: Retry without certificate validation if TLS handshake fails. Note: This makes the request vulnerable to a MITM attack.
 ## EXAMPLES
 	    # Update CLI.
 	    $ wp cli update
@@ -41,6 +43,7 @@ type Update struct {
     Stable bool // [--stable]
     Nightly bool // [--nightly]
     Yes bool // [--yes]
+    Insecure bool // [--insecure]
 }
 
 func (u Update) Args() []string {
@@ -51,6 +54,7 @@ func (u Update) Args() []string {
     args = utils.MakeArg(args, "[--stable]", u.Stable)
     args = utils.MakeArg(args, "[--nightly]", u.Nightly)
     args = utils.MakeArg(args, "[--yes]", u.Yes)
+    args = utils.MakeArg(args, "[--insecure]", u.Insecure)
     return args
 }
 

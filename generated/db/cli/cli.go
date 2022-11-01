@@ -10,6 +10,8 @@
 	: Password to pass to mysql. Defaults to DB_PASSWORD.
 	[--<field>=<value>]
 	: Extra arguments to pass to mysql. [Refer to mysql docs](https://dev.mysql.com/doc/en/mysql-command-options.html).
+	[--defaults]
+	: Loads the environment's MySQL option files. Default behavior is to skip loading them to avoid failures due to misconfiguration.
 ## EXAMPLES
 	    # Open MySQL console
 	    $ wp db cli
@@ -26,6 +28,7 @@ type Cli struct {
     Dbuser string // [--dbuser=<value>]
     Dbpass string // [--dbpass=<value>]
     FieldMap map[string]string // [--<field>=<value>]
+    Defaults bool // [--defaults]
 }
 
 func (c Cli) Args() []string {
@@ -35,6 +38,7 @@ func (c Cli) Args() []string {
     args = utils.MakeArg(args, "[--dbuser=<value>]", c.Dbuser)
     args = utils.MakeArg(args, "[--dbpass=<value>]", c.Dbpass)
     args = utils.MakeArg(args, "[--<field>=<value>]", c.FieldMap)
+    args = utils.MakeArg(args, "[--defaults]", c.Defaults)
     return args
 }
 

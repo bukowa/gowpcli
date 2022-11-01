@@ -1,7 +1,7 @@
 /*
 ## INFO
 	Runs `mysqldump` utility using `DB_HOST`, `DB_NAME`, `DB_USER` and
-	`DB_PASSWORD` database credentials specified in wp-config.php.
+	`DB_PASSWORD` database credentials specified in wp-config.php. Accepts any valid `mysqldump` flags.
 ## OPTIONS
 	[<file>]
 	: The name of the SQL file to export. If '-', then outputs to STDOUT. If
@@ -16,8 +16,12 @@
 	: The comma separated list of specific tables to export. Excluding this parameter will export all tables in the database.
 	[--exclude_tables=<tables>]
 	: The comma separated list of specific tables that should be skipped from exporting. Excluding this parameter will export all tables in the database.
+	[--include-tablespaces]
+	: Skips adding the default --no-tablespaces option to mysqldump.
 	[--porcelain]
 	: Output filename for the exported database.
+	[--defaults]
+	: Loads the environment's MySQL option files. Default behavior is to skip loading them to avoid failures due to misconfiguration.
 ## EXAMPLES
 	    # Export database with drop query included
 	    $ wp db export --add-drop-table
@@ -67,7 +71,9 @@ type Export struct {
     FieldMap map[string]string // [--<field>=<value>]
     Tables string // [--tables=<tables>]
     ExcludeTables string // [--exclude_tables=<tables>]
+    IncludeTablespaces bool // [--include-tablespaces]
     Porcelain bool // [--porcelain]
+    Defaults bool // [--defaults]
 }
 
 func (e Export) Args() []string {
@@ -78,7 +84,9 @@ func (e Export) Args() []string {
     args = utils.MakeArg(args, "[--<field>=<value>]", e.FieldMap)
     args = utils.MakeArg(args, "[--tables=<tables>]", e.Tables)
     args = utils.MakeArg(args, "[--exclude_tables=<tables>]", e.ExcludeTables)
+    args = utils.MakeArg(args, "[--include-tablespaces]", e.IncludeTablespaces)
     args = utils.MakeArg(args, "[--porcelain]", e.Porcelain)
+    args = utils.MakeArg(args, "[--defaults]", e.Defaults)
     return args
 }
 

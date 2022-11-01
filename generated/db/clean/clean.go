@@ -9,6 +9,8 @@
 	: Password to pass to mysql. Defaults to DB_PASSWORD.
 	[--yes]
 	: Answer yes to the confirmation message.
+	[--defaults]
+	: Loads the environment's MySQL option files. Default behavior is to skip loading them to avoid failures due to misconfiguration.
 ## EXAMPLES
 	    # Delete all tables that match the current site prefix.
 	    $ wp db clean --yes
@@ -23,6 +25,7 @@ type Clean struct {
     Dbuser string // [--dbuser=<value>]
     Dbpass string // [--dbpass=<value>]
     Yes bool // [--yes]
+    Defaults bool // [--defaults]
 }
 
 func (c Clean) Args() []string {
@@ -30,6 +33,7 @@ func (c Clean) Args() []string {
     args = utils.MakeArg(args, "[--dbuser=<value>]", c.Dbuser)
     args = utils.MakeArg(args, "[--dbpass=<value>]", c.Dbpass)
     args = utils.MakeArg(args, "[--yes]", c.Yes)
+    args = utils.MakeArg(args, "[--defaults]", c.Defaults)
     return args
 }
 

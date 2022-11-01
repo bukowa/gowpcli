@@ -10,6 +10,8 @@
 	: Password to pass to mysql. Defaults to DB_PASSWORD.
 	[--yes]
 	: Answer yes to the confirmation message.
+	[--defaults]
+	: Loads the environment's MySQL option files. Default behavior is to skip loading them to avoid failures due to misconfiguration.
 ## EXAMPLES
 	    $ wp db reset --yes
 	    Success: Database reset.
@@ -23,6 +25,7 @@ type Reset struct {
     Dbuser string // [--dbuser=<value>]
     Dbpass string // [--dbpass=<value>]
     Yes bool // [--yes]
+    Defaults bool // [--defaults]
 }
 
 func (r Reset) Args() []string {
@@ -30,6 +33,7 @@ func (r Reset) Args() []string {
     args = utils.MakeArg(args, "[--dbuser=<value>]", r.Dbuser)
     args = utils.MakeArg(args, "[--dbpass=<value>]", r.Dbpass)
     args = utils.MakeArg(args, "[--yes]", r.Yes)
+    args = utils.MakeArg(args, "[--defaults]", r.Defaults)
     return args
 }
 

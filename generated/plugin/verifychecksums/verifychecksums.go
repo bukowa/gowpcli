@@ -18,6 +18,8 @@
 	  - yaml
 	  - count
 	---
+	[--insecure]
+	: Retry downloads without certificate validation if TLS handshake fails. Note: This makes the request vulnerable to a MITM attack.
 ## EXAMPLES
 	    # Verify the checksums of all installed plugins
 	    $ wp plugin verify-checksums --all
@@ -36,6 +38,7 @@ type VerifyChecksums struct {
     All bool // [--all]
     Strict bool // [--strict]
     Format string // [--format=<format>]
+    Insecure bool // [--insecure]
 }
 
 func (v VerifyChecksums) Args() []string {
@@ -44,6 +47,7 @@ func (v VerifyChecksums) Args() []string {
     args = utils.MakeArg(args, "[--all]", v.All)
     args = utils.MakeArg(args, "[--strict]", v.Strict)
     args = utils.MakeArg(args, "[--format=<format>]", v.Format)
+    args = utils.MakeArg(args, "[--insecure]", v.Insecure)
     return args
 }
 

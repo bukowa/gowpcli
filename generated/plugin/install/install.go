@@ -12,6 +12,8 @@
 	: If set, the plugin will be activated immediately after install.
 	[--activate-network]
 	: If set, the plugin will be network activated immediately after install
+	[--insecure]
+	: Retry downloads without certificate validation if TLS handshake fails. Note: This makes the request vulnerable to a MITM attack.
 ## EXAMPLES
 	    # Install the latest version from wordpress.org and activate
 	    $ wp plugin install bbpress --activate
@@ -74,6 +76,7 @@ type Install struct {
     Force bool // [--force]
     Activate bool // [--activate]
     ActivateNetwork bool // [--activate-network]
+    Insecure bool // [--insecure]
 }
 
 func (i Install) Args() []string {
@@ -83,6 +86,7 @@ func (i Install) Args() []string {
     args = utils.MakeArg(args, "[--force]", i.Force)
     args = utils.MakeArg(args, "[--activate]", i.Activate)
     args = utils.MakeArg(args, "[--activate-network]", i.ActivateNetwork)
+    args = utils.MakeArg(args, "[--insecure]", i.Insecure)
     return args
 }
 

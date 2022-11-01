@@ -18,6 +18,10 @@
 	: Download WP without the default themes and plugins.
 	[--force]
 	: Overwrites existing files, if present.
+	[--insecure]
+	: Retry download without certificate validation if TLS handshake fails. Note: This makes the request vulnerable to a MITM attack.
+	[--extract]
+	: Whether to extract the downloaded file. Defaults to true.
 ## EXAMPLES
 	    $ wp core download --locale=nl_NL
 	    Downloading WordPress 4.5.2 (nl_NL)...
@@ -36,6 +40,8 @@ type Download struct {
     Version string // [--version=<version>]
     SkipContent bool // [--skip-content]
     Force bool // [--force]
+    Insecure bool // [--insecure]
+    Extract bool // [--extract]
 }
 
 func (d Download) Args() []string {
@@ -46,6 +52,8 @@ func (d Download) Args() []string {
     args = utils.MakeArg(args, "[--version=<version>]", d.Version)
     args = utils.MakeArg(args, "[--skip-content]", d.SkipContent)
     args = utils.MakeArg(args, "[--force]", d.Force)
+    args = utils.MakeArg(args, "[--insecure]", d.Insecure)
+    args = utils.MakeArg(args, "[--extract]", d.Extract)
     return args
 }
 

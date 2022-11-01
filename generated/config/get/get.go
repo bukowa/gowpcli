@@ -13,13 +13,18 @@
 	---
 	[--format=<format>]
 	: Get value in a particular format.
+	Dotenv is limited to non-object values.
 	---
 	default: var_export
 	options:
 	  - var_export
 	  - json
 	  - yaml
+	  - dotenv
 	---
+	[--config-file=<path>]
+	: Specify the file path to the config file to be read. Defaults to the root of the
+	WordPress installation and the filename "wp-config.php".
 ## EXAMPLES
 	    # Get the table_prefix as defined in wp-config.php file.
 	    $ wp config get table_prefix
@@ -34,6 +39,7 @@ type Get struct {
     Name string // <name>
     Type string // [--type=<type>]
     Format string // [--format=<format>]
+    ConfigFile string // [--config-file=<path>]
 }
 
 func (g Get) Args() []string {
@@ -41,6 +47,7 @@ func (g Get) Args() []string {
     args = utils.MakeArg(args, "<name>", g.Name)
     args = utils.MakeArg(args, "[--type=<type>]", g.Type)
     args = utils.MakeArg(args, "[--format=<format>]", g.Format)
+    args = utils.MakeArg(args, "[--config-file=<path>]", g.ConfigFile)
     return args
 }
 

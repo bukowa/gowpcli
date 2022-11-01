@@ -10,6 +10,8 @@
 	for confirmation.
 	[--activate]
 	: If set, the theme will be activated immediately after install.
+	[--insecure]
+	: Retry downloads without certificate validation if TLS handshake fails. Note: This makes the request vulnerable to a MITM attack.
 ## EXAMPLES
 	    # Install the latest version from wordpress.org and activate
 	    $ wp theme install twentysixteen --activate
@@ -35,6 +37,7 @@ type Install struct {
     Version string // [--version=<version>]
     Force bool // [--force]
     Activate bool // [--activate]
+    Insecure bool // [--insecure]
 }
 
 func (i Install) Args() []string {
@@ -43,6 +46,7 @@ func (i Install) Args() []string {
     args = utils.MakeArg(args, "[--version=<version>]", i.Version)
     args = utils.MakeArg(args, "[--force]", i.Force)
     args = utils.MakeArg(args, "[--activate]", i.Activate)
+    args = utils.MakeArg(args, "[--insecure]", i.Insecure)
     return args
 }
 

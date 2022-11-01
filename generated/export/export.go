@@ -41,7 +41,7 @@
 	: Export no more than <num> posts (excluding attachments).
 	[--author=<author>]
 	: Export only posts by this author. Can be either user login or user ID.
-	[--category=<name>]
+	[--category=<name|id>]
 	: Export only posts in this category.
 	[--post_status=<status>]
 	: Export only posts with this status.
@@ -83,7 +83,7 @@ type Export struct {
     StartId string // [--start_id=<pid>]
     MaxNumPosts string // [--max_num_posts=<num>]
     Author string // [--author=<author>]
-    Category string // [--category=<name>]
+    Category string // [--category=<name|id>]
     PostStatus string // [--post_status=<status>]
     FilenameFormat string // [--filename_format=<format>]
 }
@@ -103,7 +103,7 @@ func (e Export) Args() []string {
     args = utils.MakeArg(args, "[--start_id=<pid>]", e.StartId)
     args = utils.MakeArg(args, "[--max_num_posts=<num>]", e.MaxNumPosts)
     args = utils.MakeArg(args, "[--author=<author>]", e.Author)
-    args = utils.MakeArg(args, "[--category=<name>]", e.Category)
+    args = utils.MakeArg(args, "[--category=<name|id>]", e.Category)
     args = utils.MakeArg(args, "[--post_status=<status>]", e.PostStatus)
     args = utils.MakeArg(args, "[--filename_format=<format>]", e.FilenameFormat)
     return args

@@ -10,6 +10,8 @@
 	: Password to pass to mysql. Defaults to DB_PASSWORD.
 	[--yes]
 	: Answer yes to the confirmation message.
+	[--defaults]
+	: Loads the environment's MySQL option files. Default behavior is to skip loading them to avoid failures due to misconfiguration.
 ## EXAMPLES
 	    $ wp db drop --yes
 	    Success: Database dropped.
@@ -23,6 +25,7 @@ type Drop struct {
     Dbuser string // [--dbuser=<value>]
     Dbpass string // [--dbpass=<value>]
     Yes bool // [--yes]
+    Defaults bool // [--defaults]
 }
 
 func (d Drop) Args() []string {
@@ -30,6 +33,7 @@ func (d Drop) Args() []string {
     args = utils.MakeArg(args, "[--dbuser=<value>]", d.Dbuser)
     args = utils.MakeArg(args, "[--dbpass=<value>]", d.Dbpass)
     args = utils.MakeArg(args, "[--yes]", d.Yes)
+    args = utils.MakeArg(args, "[--defaults]", d.Defaults)
     return args
 }
 

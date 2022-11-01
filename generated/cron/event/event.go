@@ -6,7 +6,7 @@
 	    # Run all cron events due right now
 	    $ wp cron event run --due-now
 	    Success: Executed a total of 2 cron events.
-	    # Delete the next scheduled cron event
+	    # Delete all scheduled cron events for the given hook
 	    $ wp cron event delete cron_test
 	    Success: Deleted 2 instances of the cron event 'cron_test'.
 	    # List scheduled cron events in JSON

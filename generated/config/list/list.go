@@ -6,6 +6,7 @@
 	: Limit the output to specific fields. Defaults to all fields.
 	[--format=<format>]
 	: Render output in a particular format.
+	Dotenv is limited to non-object values.
 	---
 	default: table
 	options:
@@ -13,9 +14,13 @@
 	  - csv
 	  - json
 	  - yaml
+	  - dotenv
 	---
 	[--strict]
 	: Enforce strict matching when a filter is provided.
+	[--config-file=<path>]
+	: Specify the file path to the config file to be read. Defaults to the root of the
+	WordPress installation and the filename "wp-config.php".
 ## EXAMPLES
 	    # List constants and variables defined in wp-config.php file.
 	    $ wp config list
@@ -58,6 +63,7 @@ type List struct {
     Fields string // [--fields=<fields>]
     Format string // [--format=<format>]
     Strict bool // [--strict]
+    ConfigFile string // [--config-file=<path>]
 }
 
 func (l List) Args() []string {
@@ -66,6 +72,7 @@ func (l List) Args() []string {
     args = utils.MakeArg(args, "[--fields=<fields>]", l.Fields)
     args = utils.MakeArg(args, "[--format=<format>]", l.Format)
     args = utils.MakeArg(args, "[--strict]", l.Strict)
+    args = utils.MakeArg(args, "[--config-file=<path>]", l.ConfigFile)
     return args
 }
 

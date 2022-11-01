@@ -1,6 +1,6 @@
 /*
 ## OPTIONS
-	[<table>]
+	<table>
 	: Name of the database table.
 	[--format]
 	: Render output in a particular format.
@@ -48,13 +48,13 @@ import utils "github.com/bukowa/gowpcli"
 
 // Columns //Displays information about a given table.
 type Columns struct {
-    Table string // [<table>]
+    Table string // <table>
     Format bool // [--format]
 }
 
 func (c Columns) Args() []string {
     var args = []string{"db", "columns"}
-    args = utils.MakeArg(args, "[<table>]", c.Table)
+    args = utils.MakeArg(args, "<table>", c.Table)
     args = utils.MakeArg(args, "[--format]", c.Format)
     return args
 }

@@ -20,6 +20,8 @@
 	: If set, the theme will be updated to the specified version.
 	[--dry-run]
 	: Preview which themes would be updated.
+	[--insecure]
+	: Retry downloads without certificate validation if TLS handshake fails. Note: This makes the request vulnerable to a MITM attack.
 ## EXAMPLES
 	    # Update multiple themes
 	    $ wp theme update twentyfifteen twentysixteen
@@ -74,6 +76,7 @@ type Update struct {
     Format string // [--format=<format>]
     Version string // [--version=<version>]
     DryRun bool // [--dry-run]
+    Insecure bool // [--insecure]
 }
 
 func (u Update) Args() []string {
@@ -84,6 +87,7 @@ func (u Update) Args() []string {
     args = utils.MakeArg(args, "[--format=<format>]", u.Format)
     args = utils.MakeArg(args, "[--version=<version>]", u.Version)
     args = utils.MakeArg(args, "[--dry-run]", u.DryRun)
+    args = utils.MakeArg(args, "[--insecure]", u.Insecure)
     return args
 }
 

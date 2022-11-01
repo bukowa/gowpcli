@@ -22,6 +22,8 @@
 	: The password for the admin user. Defaults to randomly generated string.
 	--admin_email=<email>
 	: The email address for the admin user.
+	[--locale=<locale>]
+	: The locale/language for the installation (e.g. `de_DE`). Default is `en_US`.
 	[--skip-email]
 	: Don't send an email notification to the new admin user.
 ## EXAMPLES
@@ -42,6 +44,7 @@ type Install struct {
     AdminUser string // --admin_user=<username>
     AdminPassword string // [--admin_password=<password>]
     AdminEmail string // --admin_email=<email>
+    Locale string // [--locale=<locale>]
     SkipEmail bool // [--skip-email]
 }
 
@@ -52,6 +55,7 @@ func (i Install) Args() []string {
     args = utils.MakeArg(args, "--admin_user=<username>", i.AdminUser)
     args = utils.MakeArg(args, "[--admin_password=<password>]", i.AdminPassword)
     args = utils.MakeArg(args, "--admin_email=<email>", i.AdminEmail)
+    args = utils.MakeArg(args, "[--locale=<locale>]", i.Locale)
     args = utils.MakeArg(args, "[--skip-email]", i.SkipEmail)
     return args
 }

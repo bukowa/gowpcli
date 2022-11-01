@@ -39,6 +39,11 @@
 	: If set, the database connection is not checked.
 	[--force]
 	: Overwrites existing files, if present.
+	[--config-file=<path>]
+	: Specify the file path to the config file to be created. Defaults to the root of the
+	WordPress installation and the filename "wp-config.php".
+	[--insecure]
+	: Retry API download without certificate validation if TLS handshake fails. Note: This makes the request vulnerable to a MITM attack.
 ## EXAMPLES
 	    # Standard wp-config.php file
 	    $ wp config create --dbname=testing --dbuser=wp --dbpass=securepswd --locale=ro_RO
@@ -72,6 +77,8 @@ type Create struct {
     SkipSalts bool // [--skip-salts]
     SkipCheck bool // [--skip-check]
     Force bool // [--force]
+    ConfigFile string // [--config-file=<path>]
+    Insecure bool // [--insecure]
 }
 
 func (c Create) Args() []string {
@@ -88,6 +95,8 @@ func (c Create) Args() []string {
     args = utils.MakeArg(args, "[--skip-salts]", c.SkipSalts)
     args = utils.MakeArg(args, "[--skip-check]", c.SkipCheck)
     args = utils.MakeArg(args, "[--force]", c.Force)
+    args = utils.MakeArg(args, "[--config-file=<path>]", c.ConfigFile)
+    args = utils.MakeArg(args, "[--insecure]", c.Insecure)
     return args
 }
 

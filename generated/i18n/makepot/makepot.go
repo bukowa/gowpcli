@@ -1,6 +1,6 @@
 /*
 ## INFO
-	Scans PHP and JavaScript files for translatable strings, as well as theme stylesheets and plugin files
+	Scans PHP, Blade-PHP and JavaScript files for translatable strings, as well as theme stylesheets and plugin files
 	if the source directory is detected as either a plugin or theme.
 ## OPTIONS
 	<source>
@@ -19,10 +19,13 @@
 	: Comma-separated list of POT files whose contents should be merged with the extracted strings.
 	If left empty, defaults to the destination POT file. POT file headers will be ignored.
 	[--subtract=<paths>]
-	: Comma-separated list of POT files whose contents should act as some sort of blacklist for string extraction.
-	Any string which is found on that blacklist will not be extracted.
+	: Comma-separated list of POT files whose contents should act as some sort of denylist for string extraction.
+	Any string which is found on that denylist will not be extracted.
 	This can be useful when you want to create multiple POT files from the same source directory with slightly
 	different content and no duplicate strings between them.
+	[--subtract-and-merge]
+	: Whether source code references and comments from the generated POT file should be instead added to the POT file
+	used for subtraction. Warning: this modifies the files passed to `--subtract`!
 	[--include=<paths>]
 	: Comma-separated list of files and paths that should be used for string extraction.
 	If provided, only these files and folders will be taken into account for string extraction.
@@ -37,8 +40,20 @@
 	following files and folders are always excluded: node_modules, .git, .svn, .CVS, .hg, vendor, *.min.js.
 	[--headers=<headers>]
 	: Array in JSON format of custom headers which will be added to the POT file. Defaults to empty array.
+	[--location]
+	: Whether to write `#: filename:line` lines.
+	Defaults to true, use `--no-location` to skip the removal.
+	Note that disabling this option makes it harder for technically skilled translators to understand each message’s context.
 	[--skip-js]
 	: Skips JavaScript string extraction. Useful when this is done in another build step, e.g. through Babel.
+	[--skip-php]
+	: Skips PHP string extraction.
+	[--skip-blade]
+	: Skips Blade-PHP string extraction.
+	[--skip-block-json]
+	: Skips string extraction from block.json files.
+	[--skip-theme-json]
+	: Skips string extraction from theme.json files.
 	[--skip-audit]
 	: Skips string audit where it tries to find possible mistakes in translatable strings. Useful when running in an
 	automated environment.
@@ -78,10 +93,16 @@ type MakePot struct {
     IgnoreDomain bool // [--ignore-domain]
     Merge string // [--merge[=<paths>]]
     Subtract string // [--subtract=<paths>]
+    SubtractAndMerge bool // [--subtract-and-merge]
     Include string // [--include=<paths>]
     Exclude string // [--exclude=<paths>]
     Headers string // [--headers=<headers>]
+    Location bool // [--location]
     SkipJs bool // [--skip-js]
+    SkipPhp bool // [--skip-php]
+    SkipBlade bool // [--skip-blade]
+    SkipBlockJson bool // [--skip-block-json]
+    SkipThemeJson bool // [--skip-theme-json]
     SkipAudit bool // [--skip-audit]
     FileComment string // [--file-comment=<file-comment>]
     PackageName string // [--package-name=<name>]
@@ -96,10 +117,16 @@ func (m MakePot) Args() []string {
     args = utils.MakeArg(args, "[--ignore-domain]", m.IgnoreDomain)
     args = utils.MakeArg(args, "[--merge[=<paths>]]", m.Merge)
     args = utils.MakeArg(args, "[--subtract=<paths>]", m.Subtract)
+    args = utils.MakeArg(args, "[--subtract-and-merge]", m.SubtractAndMerge)
     args = utils.MakeArg(args, "[--include=<paths>]", m.Include)
     args = utils.MakeArg(args, "[--exclude=<paths>]", m.Exclude)
     args = utils.MakeArg(args, "[--headers=<headers>]", m.Headers)
+    args = utils.MakeArg(args, "[--location]", m.Location)
     args = utils.MakeArg(args, "[--skip-js]", m.SkipJs)
+    args = utils.MakeArg(args, "[--skip-php]", m.SkipPhp)
+    args = utils.MakeArg(args, "[--skip-blade]", m.SkipBlade)
+    args = utils.MakeArg(args, "[--skip-block-json]", m.SkipBlockJson)
+    args = utils.MakeArg(args, "[--skip-theme-json]", m.SkipThemeJson)
     args = utils.MakeArg(args, "[--skip-audit]", m.SkipAudit)
     args = utils.MakeArg(args, "[--file-comment=<file-comment>]", m.FileComment)
     args = utils.MakeArg(args, "[--package-name=<name>]", m.PackageName)

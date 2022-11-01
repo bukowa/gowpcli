@@ -4,6 +4,8 @@
 	: One or more plugins to activate.
 	[--all]
 	: If set, all plugins will be activated.
+	[--exclude=<name>]
+	: Comma separated list of plugin slugs to be excluded from activation.
 	[--network]
 	: If set, the plugin will be activated for the entire multisite network.
 ## EXAMPLES
@@ -24,6 +26,7 @@ import utils "github.com/bukowa/gowpcli"
 type Activate struct {
     Plugin []string // [<plugin>...]
     All bool // [--all]
+    Exclude string // [--exclude=<name>]
     Network bool // [--network]
 }
 
@@ -31,6 +34,7 @@ func (a Activate) Args() []string {
     var args = []string{"plugin", "activate"}
     args = utils.MakeArg(args, "[<plugin>...]", a.Plugin)
     args = utils.MakeArg(args, "[--all]", a.All)
+    args = utils.MakeArg(args, "[--exclude=<name>]", a.Exclude)
     args = utils.MakeArg(args, "[--network]", a.Network)
     return args
 }

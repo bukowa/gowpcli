@@ -54,10 +54,28 @@
 	: Can be all, global, ms_global, blog, or old tables. Defaults to all.
 	[--network]
 	: List all the tables in a multisite install.
+	[--decimals=<decimals>]
+	: Number of digits after decimal point. Defaults to 0.
 	[--all-tables-with-prefix]
 	: List all tables that match the table prefix even if not registered on $wpdb. Overrides --network.
 	[--all-tables]
 	: List all tables in the database, regardless of the prefix, and even if not registered on $wpdb. Overrides --all-tables-with-prefix.
+	[--order=<order>]
+	: Ascending or Descending order.
+	---
+	default: asc
+	options:
+	  - asc
+	  - desc
+	---
+	[--orderby=<orderby>]
+	: Order by fields.
+	---
+	default: name
+	options:
+	  - name
+	  - size
+	---
 ## EXAMPLES
 	    $ wp db size
 	    +-------------------+------+
@@ -101,8 +119,11 @@ type Size struct {
     Format string // [--format=<format>]
     Scope string // [--scope=<scope>]
     Network bool // [--network]
+    Decimals string // [--decimals=<decimals>]
     AllTablesWithPrefix bool // [--all-tables-with-prefix]
     AllTables bool // [--all-tables]
+    Order string // [--order=<order>]
+    Orderby string // [--orderby=<orderby>]
 }
 
 func (s Size) Args() []string {
@@ -113,8 +134,11 @@ func (s Size) Args() []string {
     args = utils.MakeArg(args, "[--format=<format>]", s.Format)
     args = utils.MakeArg(args, "[--scope=<scope>]", s.Scope)
     args = utils.MakeArg(args, "[--network]", s.Network)
+    args = utils.MakeArg(args, "[--decimals=<decimals>]", s.Decimals)
     args = utils.MakeArg(args, "[--all-tables-with-prefix]", s.AllTablesWithPrefix)
     args = utils.MakeArg(args, "[--all-tables]", s.AllTables)
+    args = utils.MakeArg(args, "[--order=<order>]", s.Order)
+    args = utils.MakeArg(args, "[--orderby=<orderby>]", s.Orderby)
     return args
 }
 
