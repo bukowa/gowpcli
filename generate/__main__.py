@@ -8,12 +8,15 @@ from jinja2 import Template
 from generate.synopsis import Synopsis
 from generate.utils import trim_by_index, format_to_go_struct, format_golang_comment, random_string, rename_reserved
 
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
+
 PARAMS = []
 COMMANDS: List['Command'] = []
 MAIN_IMPORTS: List['GoCommand'] = []
 
-TEMPLATE_STRUCT = Template(open("template_struct.html", "r", encoding="utf-8").read())
-TEMPLATE_MAIN = Template(open("template_main.html", "r", encoding="utf-8").read())
+TEMPLATE_STRUCT = Template(open(os.path.join(dir_path, "template_struct.html"), "r", encoding="utf-8").read())
+TEMPLATE_MAIN = Template(open(os.path.join(dir_path, "template_main.html"), "r", encoding="utf-8").read())
 
 
 @dataclass
@@ -72,7 +75,7 @@ class GoCommand:
         # build golang fields
         if self.command.synopsis:
             synopsis = Synopsis(text=self.command.synopsis)
-            self.fields = [GoField(_x) for _x in synopsis.params]
+            self.fields = [GoField(_x) for _x in synopsis.params if _x != ""]
             PARAMS.append({synopsis.text: self.fields})
 
         # build command tree
@@ -99,13 +102,13 @@ class Command:
 
         if not self.parent:
             tree = f'"{self.name}"'
-            path = f"generated/{self.folder}"
+            path = f"../generated/{self.folder}"
         elif self.parent and self.parent.parent:
             tree = f'"{self.parent.parent.name}", "{self.parent.name}", "{self.name}"'
-            path = f"generated/{self.parent.parent.folder}/{self.parent.folder}/{self.folder}"
+            path = f"../generated/{self.parent.parent.folder}/{self.parent.folder}/{self.folder}"
         elif self.parent:
             tree = f'"{self.parent.name}", "{self.name}"'
-            path = f"generated/{self.parent.folder}/{self.folder}"
+            path = f"../generated/{self.parent.folder}/{self.folder}"
         else: raise Exception(self)
 
         self.command_tree = tree
@@ -129,16 +132,16 @@ class Command:
 
 
 if __name__ == '__main__':
-    try: shutil.rmtree("./generated")
+    try: shutil.rmtree("../generated")
     except FileNotFoundError: pass
 
-    os.makedirs("./generated")
-    _x = json.load(open("dump.json", "r", encoding="utf-8"))
+    os.makedirs("../generated")
+    _x = json.load(open(os.path.join(dir_path, "dump.json"), "r", encoding="utf-8"))
 
     for _cmd in _x['subcommands']:
         COMMANDS.append(Command(**_cmd))
 
-    with open("./generated/main.go", "w", encoding="utf-8") as _f:
+    with open("../generated/main.go", "w", encoding="utf-8") as _f:
         _f.write(TEMPLATE_MAIN.render(
             imports=MAIN_IMPORTS,
         ))
