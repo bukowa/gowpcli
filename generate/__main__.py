@@ -102,13 +102,13 @@ class Command:
 
         if not self.parent:
             tree = f'"{self.name}"'
-            path = f"../generated/{self.folder}"
+            path = f"generated/{self.folder}"
         elif self.parent and self.parent.parent:
             tree = f'"{self.parent.parent.name}", "{self.parent.name}", "{self.name}"'
-            path = f"../generated/{self.parent.parent.folder}/{self.parent.folder}/{self.folder}"
+            path = f"generated/{self.parent.parent.folder}/{self.parent.folder}/{self.folder}"
         elif self.parent:
             tree = f'"{self.parent.name}", "{self.name}"'
-            path = f"../generated/{self.parent.folder}/{self.folder}"
+            path = f"generated/{self.parent.folder}/{self.folder}"
         else: raise Exception(self)
 
         self.command_tree = tree
@@ -132,16 +132,16 @@ class Command:
 
 
 if __name__ == '__main__':
-    try: shutil.rmtree("../generated")
+    try: shutil.rmtree("./generated")
     except FileNotFoundError: pass
 
-    os.makedirs("../generated")
-    _x = json.load(open(os.path.join(dir_path, "dump.json"), "r", encoding="utf-8"))
+    os.makedirs("./generated")
+    _x = json.load(open("dump.json", "r", encoding="utf-8"))
 
     for _cmd in _x['subcommands']:
         COMMANDS.append(Command(**_cmd))
 
-    with open("../generated/main.go", "w", encoding="utf-8") as _f:
+    with open("./generated/main.go", "w", encoding="utf-8") as _f:
         _f.write(TEMPLATE_MAIN.render(
             imports=MAIN_IMPORTS,
         ))
