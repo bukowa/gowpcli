@@ -1,4 +1,5 @@
 FROM wordpress:cli-php7.4
 WORKDIR /app
-ENTRYPOINT []
-CMD ["/bin/bash", "-c", "wp cli cmd-dump > dump.json"]
+USER root
+ENTRYPOINT ["/bin/bash", "-c"]
+CMD ["wp --allow-root cli cmd-dump > dump.json"]
